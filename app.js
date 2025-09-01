@@ -298,9 +298,9 @@ class SeniorFitnessApp {
    * @returns {object} The current phase object.
    */
   getCurrentPhase() {
-    if (this.currentDay <= 10) return this.phases;
-    if (this.currentDay <= 20) return this.phases;
-    return this.phases;
+    if (this.currentDay <= 10) return this.phases[0];
+    if (this.currentDay <= 20) return this.phases[1];
+    return this.phases[2];
   }
 
   /**
