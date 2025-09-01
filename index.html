@@ -1,167 +1,204 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>100天運動大計劃 - 健康活力新生活</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <!-- Link to the external stylesheet for the application -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Main container for the entire application -->
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1 class="header-title">🏃‍♂️ 100天運動大計劃</h1>
-            <p class="header-subtitle">每日15分鐘，輕鬆變靚仔</p>
-        </header>
+      <!-- Header Section -->
+      <header class="header">
+        <h1 class="header-title">🏃‍♂️ 100天運動大計劃</h1>
+        <p class="header-subtitle">每日15分鐘，輕鬆變靚仔</p>
+      </header>
 
-        <!-- Main Dashboard -->
-        <main class="main-content">
-            <div class="dashboard" id="dashboard">
-                <div class="progress-section">
-                    <div class="day-counter">
-                        <h2>第 <span id="current-day">1</span> 天</h2>
-                        <p id="current-phase">建立基礎期 (第1階段)</p>
-                    </div>
-                    
-                    <div class="progress-bar-container">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-fill"></div>
-                        </div>
-                        <span class="progress-text" id="progress-text">1%</span>
-                    </div>
-
-                    <div class="daily-info">
-                        <div class="info-card">
-                            <h3>今日運動時間</h3>
-                            <p class="highlight">15分鐘</p>
-                        </div>
-                        <div class="info-card">
-                            <h3>下一個里程碑</h3>
-                            <p class="highlight" id="next-milestone">第10天</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="motivation-section">
-                    <div class="motivation-card">
-                        <h3>今日激勵</h3>
-                        <p id="daily-motivation">今天是美好的開始！</p>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="btn btn--primary btn--lg" id="start-exercise-btn">
-                        開始今日運動 🏃‍♂️
-                    </button>
-                    <button class="btn btn--secondary" id="view-progress-btn">
-                        查看進度 📊
-                    </button>
-                </div>
+      <!-- Main content area where different views are displayed -->
+      <main class="main-content">
+        <!-- Dashboard View: The main screen of the application -->
+        <div class="dashboard" id="dashboard">
+          <!-- Progress Section: Displays the user's current progress -->
+          <div class="progress-section">
+            <div class="day-counter">
+              <h2>第 <span id="current-day">1</span> 天</h2>
+              <p id="current-phase">建立基礎期 (第1階段)</p>
             </div>
 
-            <!-- Exercise View -->
-            <div class="exercise-view hidden" id="exercise-view">
-                <div class="exercise-header">
-                    <button class="btn btn--outline" id="back-to-dashboard">← 返回主頁</button>
-                    <h2 id="exercise-phase-title">第1階段：建立基礎期</h2>
-                    <p id="exercise-focus">適應運動習慣</p>
-                </div>
-
-                <div class="timer-section">
-                    <div class="timer-display">
-                        <span id="timer">15:00</span>
-                        <button class="btn btn--primary" id="timer-btn">開始計時</button>
-                    </div>
-                </div>
-
-                <div class="exercise-list" id="exercise-list">
-                    <!-- Exercises will be populated by JavaScript -->
-                </div>
-
-                <div class="exercise-actions">
-                    <button class="btn btn--primary btn--full-width" id="complete-workout-btn" disabled>
-                        完成今日運動 ✅
-                    </button>
-                </div>
-
-                <div class="safety-tips">
-                    <h3>安全提醒 ⚠️</h3>
-                    <ul>
-                        <li>運動前先熱身，運動後要伸展</li>
-                        <li>穿舒適防滑的鞋子</li>
-                        <li>如有不適立即停止運動</li>
-                        <li>動作要慢，安全第一</li>
-                    </ul>
-                </div>
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+              </div>
+              <span class="progress-text" id="progress-text">1%</span>
             </div>
 
-            <!-- Progress View -->
-            <div class="progress-view hidden" id="progress-view">
-                <div class="progress-header">
-                    <button class="btn btn--outline" id="back-from-progress">← 返回主頁</button>
-                    <h2>運動進度追蹤</h2>
-                </div>
-
-                <div class="progress-chart">
-                    <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/f63df644dda159e36b53bff144f3755b/28585139-c390-4f95-acc4-d316e7709e12/3d584416.png" alt="100天運動進度圖" class="chart-image">
-                </div>
-
-                <div class="calendar-view">
-                    <h3>完成日曆</h3>
-                    <div class="calendar-grid" id="calendar-grid">
-                        <!-- Calendar will be populated by JavaScript -->
-                    </div>
-                </div>
-
-                <div class="milestones">
-                    <h3>里程碑成就 🏆</h3>
-                    <div class="milestone-list" id="milestone-list">
-                        <!-- Milestones will be populated by JavaScript -->
-                    </div>
-                </div>
-
-                <div class="streak-info">
-                    <div class="streak-card">
-                        <h3>連續天數</h3>
-                        <p class="streak-number" id="streak-days">0</p>
-                    </div>
-                    <div class="streak-card">
-                        <h3>完成天數</h3>
-                        <p class="streak-number" id="completed-days">0</p>
-                    </div>
-                </div>
+            <!-- Daily Information Cards -->
+            <div class="daily-info">
+              <div class="info-card">
+                <h3>今日運動時間</h3>
+                <p class="highlight">15分鐘</p>
+              </div>
+              <div class="info-card">
+                <h3>下一個里程碑</h3>
+                <p class="highlight" id="next-milestone">第10天</p>
+              </div>
             </div>
+          </div>
 
-            <!-- Success Modal -->
-            <div class="modal hidden" id="success-modal">
-                <div class="modal-content">
-                    <h2>🎉 恭喜您！</h2>
-                    <p id="success-message">您已完成今日運動！</p>
-                    <div id="milestone-achievement" class="hidden">
-                        <h3>🏆 里程碑達成！</h3>
-                        <p id="milestone-message"></p>
-                        <p id="milestone-outcome"></p>
-                    </div>
-                    <button class="btn btn--primary" id="close-modal">繼續加油！</button>
-                </div>
+          <!-- Motivation Section: Displays a daily motivational message -->
+          <div class="motivation-section">
+            <div class="motivation-card">
+              <h3>今日激勵</h3>
+              <p id="daily-motivation">今天是美好的開始！</p>
             </div>
+          </div>
 
-            <!-- Exercise Details Modal -->
-            <div class="modal hidden" id="exercise-details-modal">
-                <div class="modal-content">
-                    <h2 id="exercise-detail-name">運動詳情</h2>
-                    <div class="exercise-details">
-                        <p><strong>強度：</strong><span id="exercise-intensity"></span></p>
-                        <p><strong>次數/時間：</strong><span id="exercise-duration"></span></p>
-                        <h3>動作說明：</h3>
-                        <p id="exercise-instructions"></p>
-                    </div>
-                    <button class="btn btn--secondary" id="close-exercise-details">關閉</button>
-                </div>
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button class="btn btn--primary btn--lg" id="start-exercise-btn">
+              開始今日運動 🏃‍♂️
+            </button>
+            <button class="btn btn--secondary" id="view-progress-btn">
+              查看進度 📊
+            </button>
+          </div>
+        </div>
+
+        <!-- Exercise View: Shown when the user starts a workout -->
+        <div class="exercise-view hidden" id="exercise-view">
+          <div class="exercise-header">
+            <button class="btn btn--outline" id="back-to-dashboard">
+              ← 返回主頁
+            </button>
+            <h2 id="exercise-phase-title">第1階段：建立基礎期</h2>
+            <p id="exercise-focus">適應運動習慣</p>
+          </div>
+
+          <!-- Timer Section -->
+          <div class="timer-section">
+            <div class="timer-display">
+              <span id="timer">15:00</span>
+              <button class="btn btn--primary" id="timer-btn">開始計時</button>
             </div>
-        </main>
+          </div>
+
+          <!-- Exercise List: Populated by JavaScript -->
+          <div class="exercise-list" id="exercise-list">
+            <!-- Exercises will be populated by JavaScript -->
+          </div>
+
+          <!-- Action button to complete the workout -->
+          <div class="exercise-actions">
+            <button
+              class="btn btn--primary btn--full-width"
+              id="complete-workout-btn"
+              disabled
+            >
+              完成今日運動 ✅
+            </button>
+          </div>
+
+          <!-- Safety Tips Section -->
+          <div class="safety-tips">
+            <h3>安全提醒 ⚠️</h3>
+            <ul>
+              <li>運動前先熱身，運動後要伸展</li>
+              <li>穿舒適防滑的鞋子</li>
+              <li>如有不適立即停止運動</li>
+              <li>動作要慢，安全第一</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Progress View: Shows the user's overall progress -->
+        <div class="progress-view hidden" id="progress-view">
+          <div class="progress-header">
+            <button class="btn btn--outline" id="back-from-progress">
+              ← 返回主頁
+            </button>
+            <h2>運動進度追蹤</h2>
+          </div>
+
+          <!-- Progress Chart Image -->
+          <div class="progress-chart">
+            <img
+              src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/f63df644dda159e36b53bff144f3755b/28585139-c390-4f95-acc4-d316e7709e12/3d584416.png"
+              alt="100天運動進度圖"
+              class="chart-image"
+            />
+          </div>
+
+          <!-- Calendar View: Shows completed days -->
+          <div class="calendar-view">
+            <h3>完成日曆</h3>
+            <div class="calendar-grid" id="calendar-grid">
+              <!-- Calendar will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Milestones Section -->
+          <div class="milestones">
+            <h3>里程碑成就 🏆</h3>
+            <div class="milestone-list" id="milestone-list">
+              <!-- Milestones will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Streak Information -->
+          <div class="streak-info">
+            <div class="streak-card">
+              <h3>連續天數</h3>
+              <p class="streak-number" id="streak-days">0</p>
+            </div>
+            <div class="streak-card">
+              <h3>完成天數</h3>
+              <p class="streak-number" id="completed-days">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Success Modal: Shown after completing a workout -->
+        <div class="modal hidden" id="success-modal">
+          <div class="modal-content">
+            <h2>🎉 恭喜您！</h2>
+            <p id="success-message">您已完成今日運動！</p>
+            <div id="milestone-achievement" class="hidden">
+              <h3>🏆 里程碑達成！</h3>
+              <p id="milestone-message"></p>
+              <p id="milestone-outcome"></p>
+            </div>
+            <button class="btn btn--primary" id="close-modal">
+              繼續加油！
+            </button>
+          </div>
+        </div>
+
+        <!-- Exercise Details Modal: Shows details for a specific exercise -->
+        <div class="modal hidden" id="exercise-details-modal">
+          <div class="modal-content">
+            <h2 id="exercise-detail-name">運動詳情</h2>
+            <div class="exercise-details">
+              <p>
+                <strong>強度：</strong><span id="exercise-intensity"></span>
+              </p>
+              <p>
+                <strong>次數/時間：</strong><span id="exercise-duration"></span>
+              </p>
+              <h3>動作說明：</h3>
+              <p id="exercise-instructions"></p>
+            </div>
+            <button class="btn btn--secondary" id="close-exercise-details">
+              關閉
+            </button>
+          </div>
+        </div>
+      </main>
     </div>
 
+    <!-- Link to the main JavaScript file for the application logic -->
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

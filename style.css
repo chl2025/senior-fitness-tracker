@@ -1,5 +1,13 @@
+/*
+  @file: style.css
+  @description: This file contains all the styles for the Senior Fitness Tracker application.
+  It uses CSS custom properties (variables) for a consistent design system, including colors, fonts, and spacing.
+  The styles are organized into sections: design system tokens, base styles, components, and layout utilities.
+*/
+
+/* --- DESIGN SYSTEM TOKENS --- */
 :root {
-  /* Primitive Color Tokens */
+  /* Color Palette */
   --color-white: rgba(255, 255, 255, 1);
   --color-black: rgba(0, 0, 0, 1);
   --color-cream-50: rgba(252, 252, 249, 1);
@@ -144,7 +152,7 @@
   --container-xl: 1280px;
 }
 
-/* Dark mode colors */
+/* --- DARK MODE STYLES --- */
 @media (prefers-color-scheme: dark) {
   :root {
     /* RGB versions for opacity control (Dark Mode) */
@@ -162,7 +170,7 @@
     --color-bg-6: rgba(194, 65, 12, 0.15); /* Dark orange */
     --color-bg-7: rgba(190, 24, 93, 0.15); /* Dark pink */
     --color-bg-8: rgba(8, 145, 178, 0.15); /* Dark cyan */
-    
+
     /* Semantic Color Tokens (Dark Mode) */
     --color-background: var(--color-charcoal-700);
     --color-surface: var(--color-charcoal-800);
@@ -222,7 +230,7 @@
   --color-bg-6: rgba(194, 65, 12, 0.15); /* Dark orange */
   --color-bg-7: rgba(190, 24, 93, 0.15); /* Dark pink */
   --color-bg-8: rgba(8, 145, 178, 0.15); /* Dark cyan */
-  
+
   /* Semantic Color Tokens (Dark Mode) */
   --color-background: var(--color-charcoal-700);
   --color-surface: var(--color-charcoal-800);
@@ -268,7 +276,7 @@
   --color-brown-600-rgb: 94, 82, 64;
   --color-teal-500-rgb: 33, 128, 141;
   --color-slate-900-rgb: 19, 52, 59;
-  
+
   /* Semantic Color Tokens (Light Mode) */
   --color-background: var(--color-cream-50);
   --color-surface: var(--color-cream-100);
@@ -297,7 +305,7 @@
   --color-info-rgb: var(--color-slate-500-rgb);
 }
 
-/* Base styles */
+/* --- BASE STYLES --- */
 html {
   font-size: var(--font-size-base);
   font-family: var(--font-family-base);
@@ -319,7 +327,7 @@ body {
   box-sizing: inherit;
 }
 
-/* Typography */
+/* --- TYPOGRAPHY --- */
 h1,
 h2,
 h3,
@@ -390,7 +398,7 @@ pre code {
   padding: 0;
 }
 
-/* Buttons */
+/* --- BUTTONS --- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -469,7 +477,7 @@ pre code {
   cursor: not-allowed;
 }
 
-/* Form elements */
+/* --- FORM ELEMENTS --- */
 .form-control {
   display: block;
   width: 100%;
@@ -533,7 +541,7 @@ select.form-control {
   margin-bottom: var(--space-16);
 }
 
-/* Card component */
+/* --- CARD COMPONENT --- */
 .card {
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -557,7 +565,7 @@ select.form-control {
   border-bottom: 1px solid var(--color-card-border-inner);
 }
 
-/* Status indicators - simplified with CSS variables */
+/* --- STATUS INDICATORS --- */
 .status {
   display: inline-flex;
   align-items: center;
@@ -607,7 +615,7 @@ select.form-control {
     rgba(var(--color-info-rgb, 98, 108, 113), var(--status-border-opacity));
 }
 
-/* Container layout */
+/* --- LAYOUT --- */
 .container {
   width: 100%;
   margin-right: auto;
@@ -637,7 +645,7 @@ select.form-control {
   }
 }
 
-/* Utility classes */
+/* --- UTILITY CLASSES --- */
 .flex {
   display: flex;
 }
@@ -708,7 +716,7 @@ select.form-control {
   display: none;
 }
 
-/* Accessibility */
+/* --- ACCESSIBILITY --- */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -732,14 +740,14 @@ select.form-control {
 }
 
 @font-face {
-  font-family: 'FKGroteskNeue';
-  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
-    format('woff2');
+  font-family: "FKGroteskNeue";
+  src: url("https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2")
+    format("woff2");
 }
 
-/* END PERPLEXITY DESIGN SYSTEM */
-/* Senior-friendly fitness app styles */
+/* --- APPLICATION-SPECIFIC STYLES --- */
 
+/* Header */
 .header {
   text-align: center;
   padding: var(--space-24) 0;
@@ -766,7 +774,7 @@ select.form-control {
   margin: 0 auto;
 }
 
-/* Dashboard Styles */
+/* Dashboard */
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -814,7 +822,11 @@ select.form-control {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-hover));
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-primary-hover)
+  );
   border-radius: var(--radius-full);
   transition: width 0.5s ease;
   width: 1%;
@@ -885,7 +897,7 @@ select.form-control {
   padding: var(--space-16) var(--space-24);
 }
 
-/* Exercise View Styles */
+/* Exercise View */
 .exercise-view {
   display: flex;
   flex-direction: column;
@@ -1021,7 +1033,7 @@ select.form-control {
   line-height: 1.6;
 }
 
-/* Progress View Styles */
+/* Progress View */
 .progress-view {
   display: flex;
   flex-direction: column;
@@ -1196,7 +1208,7 @@ select.form-control {
   margin: 0;
 }
 
-/* Modal Styles */
+/* --- MODAL STYLES --- */
 .modal {
   position: fixed;
   top: 0;
@@ -1242,42 +1254,42 @@ select.form-control {
   margin-bottom: var(--space-8);
 }
 
-/* Responsive Design */
+/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 640px) {
   .container {
     padding: var(--space-8);
   }
-  
+
   .header {
     padding: var(--space-16) var(--space-8);
     margin-bottom: var(--space-16);
   }
-  
+
   .header-title {
     font-size: var(--font-size-3xl);
   }
-  
+
   .header-subtitle {
     font-size: var(--font-size-lg);
   }
-  
+
   .daily-info {
     grid-template-columns: 1fr;
   }
-  
+
   .calendar-grid {
     grid-template-columns: repeat(5, 1fr);
   }
-  
+
   .streak-info {
     grid-template-columns: 1fr;
   }
-  
+
   .timer-display {
     flex-direction: column;
     gap: var(--space-16);
   }
-  
+
   .exercise-details {
     flex-direction: column;
     gap: var(--space-8);

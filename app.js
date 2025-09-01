@@ -1,15 +1,31 @@
 // 100天運動大計劃 - JavaScript Application Logic
 
+/**
+ * @class SeniorFitnessApp
+ * @description Main class for the Senior Fitness App. Manages state, data, and UI.
+ */
 class SeniorFitnessApp {
+  /**
+   * @constructor
+   * @description Initializes the application's state and data.
+   */
   constructor() {
+    // --- STATE VARIABLES ---
+    /** @type {number} - The current day in the 100-day program. */
     this.currentDay = 1;
+    /** @type {Set<number>} - A set of completed day numbers. */
     this.completedDays = new Set();
+    /** @type {Set<number>} - A set of completed exercise indices for the current day. */
     this.currentExerciseCompletion = new Set();
+    /** @type {?number} - Interval ID for the timer. */
     this.timerInterval = null;
-    this.timerSeconds = 15 * 60; // 15 minutes in seconds
+    /** @type {number} - Total seconds for the timer (15 minutes). */
+    this.timerSeconds = 15 * 60;
+    /** @type {boolean} - Flag indicating if the timer is currently running. */
     this.timerRunning = false;
 
-    // Application data
+    // --- APPLICATION DATA ---
+    /** @type {Array<object>} - Exercise phases and their details. */
     this.phases = [
       {
         phase: 1,
@@ -157,6 +173,7 @@ class SeniorFitnessApp {
       },
     ];
 
+    /** @type {Array<object>} - Milestones for the 100-day program. */
     this.milestones = [
       {
         day: 10,
@@ -184,6 +201,7 @@ class SeniorFitnessApp {
       },
     ];
 
+    /** @type {Array<string>} - A collection of motivational messages. */
     this.motivationalMessages = [
       "今天是美好的開始！",
       "每一天的堅持都讓您更健康！",
@@ -196,6 +214,10 @@ class SeniorFitnessApp {
     ];
   }
 
+  /**
+   * @method init
+   * @description Initializes the application by loading data, updating the UI, and setting up event listeners.
+   */
   init() {
     console.log("Initializing app...");
     this.loadData();
@@ -204,10 +226,14 @@ class SeniorFitnessApp {
     console.log("App initialized successfully");
   }
 
+  /**
+   * @method setupEventListeners
+   * @description Sets up all the necessary event listeners for the application.
+   */
   setupEventListeners() {
     console.log("Setting up event listeners...");
 
-    // Use more robust event listener setup with error handling
+    // Use a helper function to add event listeners safely.
     this.addEventListenerSafely("start-exercise-btn", "click", () => {
       console.log("Start exercise button clicked");
       this.showExerciseView();
@@ -249,6 +275,13 @@ class SeniorFitnessApp {
     console.log("Event listeners setup complete");
   }
 
+  /**
+   * @method addEventListenerSafely
+   * @description A helper function to add an event listener to an element, with a check to ensure the element exists.
+   * @param {string} elementId - The ID of the DOM element.
+   * @param {string} event - The event to listen for (e.g., 'click').
+   * @param {function} handler - The function to execute when the event occurs.
+   */
   addEventListenerSafely(elementId, event, handler) {
     const element = document.getElementById(elementId);
     if (element) {
@@ -259,24 +292,33 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method getCurrentPhase
+   * @description Determines the current exercise phase based on the current day.
+   * @returns {object} The current phase object.
+   */
   getCurrentPhase() {
-    if (this.currentDay <= 10) return this.phases[0];
-    if (this.currentDay <= 20) return this.phases[1];
-    //  if (this.currentDay <= 30) return this.phases;
-    return this.phases[2];
+    if (this.currentDay <= 10) return this.phases;
+    if (this.currentDay <= 20) return this.phases;
+    return this.phases;
   }
 
+  /**
+   * @method updateDashboard
+   * @description Updates the main dashboard with the latest data (current day, phase, progress, etc.).
+   */
   updateDashboard() {
     console.log("Updating dashboard...");
     const currentPhase = this.getCurrentPhase();
 
+    // Update dashboard text elements
     this.updateElementText("current-day", this.currentDay);
     this.updateElementText(
       "current-phase",
       `${currentPhase.title} (第${currentPhase.phase}階段)`
     );
 
-    // Update progress bar
+    // Update the progress bar
     const progress = (this.currentDay / 100) * 100;
     const progressFill = document.getElementById("progress-fill");
     if (progressFill) {
@@ -284,14 +326,14 @@ class SeniorFitnessApp {
     }
     this.updateElementText("progress-text", `${Math.round(progress)}%`);
 
-    // Update next milestone
+    // Update the next milestone display
     const nextMilestone = this.milestones.find((m) => m.day > this.currentDay);
     this.updateElementText(
       "next-milestone",
       nextMilestone ? `第${nextMilestone.day}天` : "已完成所有里程碑！"
     );
 
-    // Update daily motivation
+    // Display a random motivational message
     const randomMessage =
       this.motivationalMessages[
         Math.floor(Math.random() * this.motivationalMessages.length)
@@ -301,6 +343,12 @@ class SeniorFitnessApp {
     console.log("Dashboard updated");
   }
 
+  /**
+   * @method updateElementText
+   * @description A helper function to update the text content of a DOM element.
+   * @param {string} elementId - The ID of the DOM element.
+   * @param {string} text - The text to set.
+   */
   updateElementText(elementId, text) {
     const element = document.getElementById(elementId);
     if (element) {
@@ -310,57 +358,73 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method showView
+   * @description Hides all main views and shows the specified view.
+   * @param {string} viewId - The ID of the view to show ('dashboard', 'exercise-view', 'progress-view').
+   */
   showView(viewId) {
     console.log(`Showing view: ${viewId}`);
 
-    // Hide all views first
+    // Hide all views
     const views = ["dashboard", "exercise-view", "progress-view"];
     views.forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
         element.style.display = "none";
-        console.log(`Hiding view: ${id}`);
       }
     });
 
-    // Show the requested view
+    // Show the target view
     const targetView = document.getElementById(viewId);
     if (targetView) {
       targetView.style.display = "flex";
-      console.log(`Showing view: ${viewId}`);
     } else {
       console.error(`View not found: ${viewId}`);
     }
   }
 
+  /**
+   * @method showDashboard
+   * @description A shortcut method to show the main dashboard view.
+   */
   showDashboard() {
     console.log("Showing dashboard");
     this.showView("dashboard");
   }
 
+  /**
+   * @method showExerciseView
+   * @description Shows the exercise view and populates it with the current day's exercises.
+   */
   showExerciseView() {
     console.log("Showing exercise view");
     this.showView("exercise-view");
 
     const currentPhase = this.getCurrentPhase();
 
-    // Update exercise header
+    // Update the header with phase information
     this.updateElementText(
       "exercise-phase-title",
       `第${currentPhase.phase}階段：${currentPhase.title}`
     );
     this.updateElementText("exercise-focus", currentPhase.focus);
 
-    // Reset exercise completion state
+    // Reset completion state for the new session
     this.currentExerciseCompletion.clear();
 
-    // Populate exercise list
+    // Render the list of exercises for the current phase
     this.renderExerciseList(currentPhase.exercises);
 
-    // Reset timer
+    // Reset the timer
     this.resetTimer();
   }
 
+  /**
+   * @method renderExerciseList
+   * @description Renders the list of exercises for the current phase into the UI.
+   * @param {Array<object>} exercises - An array of exercise objects.
+   */
   renderExerciseList(exercises) {
     console.log("Rendering exercise list...");
     const exerciseList = document.getElementById("exercise-list");
@@ -369,7 +433,7 @@ class SeniorFitnessApp {
       return;
     }
 
-    exerciseList.innerHTML = "";
+    exerciseList.innerHTML = ""; // Clear previous list
 
     exercises.forEach((exercise, index) => {
       const exerciseItem = document.createElement("div");
@@ -387,16 +451,16 @@ class SeniorFitnessApp {
                 </div>
             `;
 
-      // Add click listener for exercise details
+      // Click listener to show exercise details
       exerciseItem.addEventListener("click", () =>
         this.showExerciseDetails(exercise)
       );
 
-      // Add checkbox functionality
+      // Click listener for the checkbox
       const checkbox = exerciseItem.querySelector(".exercise-checkbox");
       if (checkbox) {
         checkbox.addEventListener("click", (e) => {
-          e.stopPropagation();
+          e.stopPropagation(); // Prevent triggering the item click
           this.toggleExerciseCompletion(index);
         });
       }
@@ -408,6 +472,11 @@ class SeniorFitnessApp {
     console.log(`Rendered ${exercises.length} exercises`);
   }
 
+  /**
+   * @method toggleExerciseCompletion
+   * @description Toggles the completion status of an exercise.
+   * @param {number} index - The index of the exercise to toggle.
+   */
   toggleExerciseCompletion(index) {
     console.log(`Toggling exercise completion for index: ${index}`);
     const checkbox = document.querySelector(`[data-index="${index}"]`);
@@ -429,6 +498,10 @@ class SeniorFitnessApp {
     this.updateCompleteButton();
   }
 
+  /**
+   * @method updateCompleteButton
+   * @description Enables or disables the "Complete Workout" button based on whether all exercises are checked.
+   */
   updateCompleteButton() {
     const currentPhase = this.getCurrentPhase();
     const completeBtn = document.getElementById("complete-workout-btn");
@@ -441,6 +514,11 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method showExerciseDetails
+   * @description Shows a modal with detailed instructions for a specific exercise.
+   * @param {object} exercise - The exercise object to display.
+   */
   showExerciseDetails(exercise) {
     console.log(`Showing exercise details for: ${exercise.name}`);
     this.updateElementText("exercise-detail-name", exercise.name);
@@ -457,6 +535,10 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method closeExerciseDetails
+   * @description Closes the exercise details modal.
+   */
   closeExerciseDetails() {
     const modal = document.getElementById("exercise-details-modal");
     if (modal) {
@@ -464,6 +546,10 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method toggleTimer
+   * @description Starts or pauses the workout timer.
+   */
   toggleTimer() {
     console.log("Toggling timer");
     const timerBtn = document.getElementById("timer-btn");
@@ -477,6 +563,10 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method startTimer
+   * @description Starts the timer interval.
+   */
   startTimer() {
     console.log("Starting timer");
     this.timerRunning = true;
@@ -490,17 +580,24 @@ class SeniorFitnessApp {
     }, 1000);
   }
 
+  /**
+   * @method pauseTimer
+   * @description Pauses the timer interval.
+   */
   pauseTimer() {
     console.log("Pausing timer");
     this.timerRunning = false;
     clearInterval(this.timerInterval);
   }
 
+  /**
+   * @method resetTimer
+   * @description Resets the timer to its initial state.
+   */
   resetTimer() {
     console.log("Resetting timer");
-    this.timerRunning = false;
+    this.pauseTimer(); // Stop any existing interval
     this.timerSeconds = 15 * 60;
-    clearInterval(this.timerInterval);
     this.updateTimerDisplay();
 
     const timerBtn = document.getElementById("timer-btn");
@@ -510,6 +607,10 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method completeTimer
+   * @description Handles the timer completion event.
+   */
   completeTimer() {
     console.log("Timer completed");
     this.pauseTimer();
@@ -520,6 +621,10 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method updateTimerDisplay
+   * @description Updates the timer display in the UI.
+   */
   updateTimerDisplay() {
     const minutes = Math.floor(this.timerSeconds / 60);
     const seconds = this.timerSeconds % 60;
@@ -529,16 +634,20 @@ class SeniorFitnessApp {
     this.updateElementText("timer", timeString);
   }
 
+  /**
+   * @method completeWorkout
+   * @description Handles the logic for completing a day's workout.
+   */
   completeWorkout() {
     console.log("Completing workout");
 
-    // Mark current day as completed
+    // Mark the current day as completed
     this.completedDays.add(this.currentDay);
 
-    // Check for milestone achievement
+    // Check if a milestone has been reached
     const milestone = this.milestones.find((m) => m.day === this.currentDay);
 
-    // Show success modal
+    // Show the success modal
     this.updateElementText(
       "success-message",
       "您已完成今日運動！繼續保持這個好習慣！"
@@ -560,11 +669,15 @@ class SeniorFitnessApp {
       modal.style.display = "flex";
     }
 
-    // Advance to next day (for demo purposes)
+    // Advance to the next day
     this.currentDay = Math.min(this.currentDay + 1, 100);
     this.saveData();
   }
 
+  /**
+   * @method closeModal
+   * @description Closes the success modal and returns to the dashboard.
+   */
   closeModal() {
     const modal = document.getElementById("success-modal");
     if (modal) {
@@ -574,20 +687,24 @@ class SeniorFitnessApp {
     this.updateDashboard();
   }
 
+  /**
+   * @method showProgressView
+   * @description Shows the progress view and renders its components.
+   */
   showProgressView() {
     console.log("Showing progress view");
     this.showView("progress-view");
 
-    // Render calendar
+    // Render the progress calendar, milestones, and streak info
     this.renderCalendar();
-
-    // Render milestones
     this.renderMilestones();
-
-    // Update streak info
     this.updateStreakInfo();
   }
 
+  /**
+   * @method renderCalendar
+   * @description Renders the 100-day progress calendar.
+   */
   renderCalendar() {
     console.log("Rendering calendar");
     const calendarGrid = document.getElementById("calendar-grid");
@@ -612,6 +729,10 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method renderMilestones
+   * @description Renders the list of milestones and their achievement status.
+   */
   renderMilestones() {
     console.log("Rendering milestones");
     const milestoneList = document.getElementById("milestone-list");
@@ -646,9 +767,13 @@ class SeniorFitnessApp {
     });
   }
 
+  /**
+   * @method updateStreakInfo
+   * @description Calculates and displays the current workout streak and total completed days.
+   */
   updateStreakInfo() {
     console.log("Updating streak info");
-    // Calculate current streak
+    // Calculate the current streak by checking previous days
     let streak = 0;
     for (let day = this.currentDay - 1; day >= 1; day--) {
       if (this.completedDays.has(day)) {
@@ -662,6 +787,10 @@ class SeniorFitnessApp {
     this.updateElementText("completed-days", this.completedDays.size);
   }
 
+  /**
+   * @method saveData
+   * @description Saves the current application state to localStorage.
+   */
   saveData() {
     const data = {
       currentDay: this.currentDay,
@@ -671,6 +800,10 @@ class SeniorFitnessApp {
     console.log("Data saved to localStorage");
   }
 
+  /**
+   * @method loadData
+   * @description Loads application state from localStorage.
+   */
   loadData() {
     const data = localStorage.getItem("seniorFitnessData");
     if (data) {
@@ -681,6 +814,10 @@ class SeniorFitnessApp {
     }
   }
 
+  /**
+   * @method resetData
+   * @description Resets all application data to its initial state.
+   */
   resetData() {
     localStorage.removeItem("seniorFitnessData");
     this.currentDay = 1;
@@ -690,7 +827,10 @@ class SeniorFitnessApp {
   }
 }
 
-// Initialize the app when the page loads
+// --- APP INITIALIZATION ---
+/**
+ * @description This event listener waits for the DOM to be fully loaded before initializing the app.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM content loaded, initializing app");
   try {
